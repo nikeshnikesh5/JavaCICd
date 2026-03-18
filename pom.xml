@@ -1,47 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.springframework</groupId>
     <artifactId>simple-servlet</artifactId>
+    <version>0.1</version>
     <packaging>war</packaging>
 
-    <version>0.1</version>
-
+    <!-- ✅ Java 21 -->
     <properties>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-        <!-- Jetty version from
-           https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-maven-plugin/
-        -->
-        <jettyVersion>9.4.12.v20180830</jettyVersion>
+        <maven.compiler.release>21</maven.compiler.release>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <jetty.version>11.0.17</jetty.version>
     </properties>
 
- <dependencies>
-    <dependency>
-     <groupId>javax</groupId>
-     <artifactId>javaee-api</artifactId>
-     <version>8.0</version>
-     <scope>provided</scope>
-   </dependency>
+    <dependencies>
 
-   <dependency>
-      <groupId>org.eclipse.jetty</groupId>
-      <artifactId>jetty-server</artifactId>
-      <version>${jettyVersion}</version>
-    </dependency>
+        <!-- ✅ Jakarta EE (replaces javax) -->
+        <dependency>
+            <groupId>jakarta.platform</groupId>
+            <artifactId>jakarta.jakartaee-api</artifactId>
+            <version>10.0.0</version>
+            <scope>provided</scope>
+        </dependency>
 
- </dependencies>
-
-<build>
-    <plugins>
-        <plugin>
+        <!-- ✅ Jetty Server -->
+        <dependency>
             <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-maven-plugin</artifactId>
-            <version>${jettyVersion}</version>
-        </plugin>
-    </plugins>
-</build>
+            <artifactId>jetty-server</artifactId>
+            <version>${jetty.version}</version>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+
+            <!-- ✅ Compiler plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.11.0</version>
+                <configuration>
+                    <release>21</release>
+                </configuration>
+            </plugin>
+
+            <!-- ✅ WAR plugin (important for web apps) -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.4.0</version>
+            </plugin>
+
+            <!-- ✅ Jetty plugin -->
+            <plugin>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <version>${jetty.version}</version>
+            </plugin>
+
+        </plugins>
+    </build>
 
 </project>
